@@ -1,6 +1,7 @@
 const express = require("express")
 const router = express.Router();
 const Action = require('./actions-model.js')
+const { validateAction } = require('../actions/actions-middlware.js')
 
 // ACTION ENDPOINTS
 
@@ -9,7 +10,11 @@ router.get('/', (req, res) => {
     .then(actions => {
         res.status(200).json(actions)
     })
-    .catch()
+    .catch(error => {
+        res.status(500).json({
+            message: error.message
+        })
+    })
 })
 
 router.get('/:id', (req, res) => {
@@ -24,22 +29,25 @@ router.get('/:id', (req, res) => {
             })
         }
     })
-    .catch()
+    .catch(error => {
+        res.status(500).json({
+            message: error.message
+        })
+    })
 })
 
-router.post('/', (req, res) => {
+router.post('/', validateAction, (req, res) => {
     const newAction = req.body
+
     Action.insert(newAction)
-    .then(action => {
-        if(!action.description || !action.notes){
-            res.status(400).json({
-                message: "Input for descrition and notes is required"
-            })
-        } else {
-            res.status(201).json(action)
-        }
+    .then(newAction => {
+        res.status(201).json(newAction)
     })
-    .catch()
+    .catch(error => {
+        res.status(500).json({
+            message: error.message
+        })
+    })
 })
 
 router.put('/:id', (req, res) => {
@@ -64,7 +72,11 @@ router.put('/:id', (req, res) => {
                 })
             }
         })
-        .catch()
+        .catch(error => {
+            res.status(500).json({
+                message: error.message
+            })
+        })
     }
 })
 

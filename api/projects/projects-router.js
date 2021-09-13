@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const Project= require('./projects-model.js');
 
+const { validateProject } = require('./projects-middleware.js')
+
 // PROJECT ENDPOINTS
 
 router.get('/', (req, res) => {
@@ -25,23 +27,25 @@ router.get('/:id', (req, res) => {
             })
         }
     })
-    .catch()
+    .catch(error => {
+        res.status(500).json({
+            message: error.message
+        })
+    })
 })
 
-router.post('/', (req, res) => {
+router.post('/', validateProject, (req, res) => {
     const newProject = req.body
 
     Project.insert(newProject)
-    .then(project => {
-        if(!newProject.name || !newProject.description){
-            res.status(400).json({
-                message: "Input for name and descrition is required"
-            })
-        } else {
-            res.status(201).json(project)
-        }
+    .then(newProject => {
+        res.status(201).json(newProject)
     })
-    .catch()
+    .catch(error => {
+        res.status(500).json({
+            message: error.message
+        })
+    })
 })
 
 router.put('/:id', (req, res) => {
@@ -66,7 +70,11 @@ router.put('/:id', (req, res) => {
                 })
             }
         })
-        .catch()
+        .catch(error => {
+            res.status(500).json({
+                message: error.message
+            })
+        })
     }
 })
 
@@ -103,7 +111,11 @@ router.get('/:id/actions', (req, res) => {
             res.status(200).json(actions)
         }
     })
-    .catch()
+    .catch(error => {
+        res.status(500).json({
+            message: error.message
+        })
+    })
 })
 
 module.exports = router
