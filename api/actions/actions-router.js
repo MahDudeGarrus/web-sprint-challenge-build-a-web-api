@@ -4,15 +4,15 @@ const Action = require('./actions-model.js')
 
 // ACTION ENDPOINTS
 
-router.get('/api/actions', (res, req) => {
-    Action.get(req.query)
+router.get('/', (req, res) => {
+    Action.get()
     .then(actions => {
         res.status(200).json(actions)
     })
     .catch()
 })
 
-router.get('/:id', (res, req) => {
+router.get('/:id', (req, res) => {
     const actionID = req.params.id
     Action.get(actionID)
     .then(action => {
@@ -27,7 +27,7 @@ router.get('/:id', (res, req) => {
     .catch()
 })
 
-router.post('/', (res, req) => {
+router.post('/', (req, res) => {
     const newAction = req.body
     Action.insert(newAction)
     .then(action => {
@@ -42,7 +42,7 @@ router.post('/', (res, req) => {
     .catch()
 })
 
-router.put('/:id', (res, req) => {
+router.put('/:id', (req, res) => {
     const actionID = req.params.id
     const updatedAction = req.body
 
@@ -68,7 +68,7 @@ router.put('/:id', (res, req) => {
     }
 })
 
-router.delete('/:id', async (res, req) => {
+router.delete('/:id', async (req, res) => {
     try{
         const actionID = req.params.id
         const deletedAction = await Action.remove(actionID)
@@ -87,3 +87,5 @@ router.delete('/:id', async (res, req) => {
         })
     }
 })
+
+module.exports = router

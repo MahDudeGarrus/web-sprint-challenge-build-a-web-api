@@ -4,15 +4,15 @@ const Project= require('./projects-model.js');
 
 // PROJECT ENDPOINTS
 
-router.get('/', (res, req) => {
-    Project.get(req.query)
+router.get('/', (req, res) => {
+    Project.get()
     .then(projects => {
         res.status(200).json(projects)
     })
     .catch()
 })
 
-router.get('/:id', (res, req) => {
+router.get('/:id', (req, res) => {
     const projectID = req.params.id
 
     Project.get(projectID)
@@ -28,7 +28,7 @@ router.get('/:id', (res, req) => {
     .catch()
 })
 
-router.post('/', (res, req) => {
+router.post('/', (req, res) => {
     const newProject = req.body
 
     Project.insert(newProject)
@@ -44,7 +44,7 @@ router.post('/', (res, req) => {
     .catch()
 })
 
-router.put('/:id', (res, req) => {
+router.put('/:id', (req, res) => {
     const projectID = req.params.id
     const updatedProject = req.body
 
@@ -70,7 +70,7 @@ router.put('/:id', (res, req) => {
     }
 })
 
-router.delete('/:id', async (res, req) => {
+router.delete('/:id', async (req, res) => {
     try{
         const projectID = req.params.id
         const deletedProject = await Project.remove(projectID)
@@ -90,7 +90,7 @@ router.delete('/:id', async (res, req) => {
     }
 })
 
-router.get('/:id/actions', (res, req) => {
+router.get('/:id/actions', (req, res) => {
     const projectID = req.params.id
 
     Project.getProjectActions(projectID)
@@ -105,3 +105,5 @@ router.get('/:id/actions', (res, req) => {
     })
     .catch()
 })
+
+module.exports = router
