@@ -147,7 +147,26 @@ We have provided test data for all the resources.
 Be prepared to demonstrate your understanding of this week's concepts by answering questions on the following topics. You might prepare by writing down your own answers before hand.
 
 1. The core features of Node.js and Express and why they are useful.
+A: Node.js is the answer that javascript gave to more powerful coding languages to show
+   that it can write server code, which is JSON. It is useful because javascript can be
+   used to code for client and server side. Express is a framework that makes app building easier for Node.js programmers. It is especially useful for RESTful web services.
+
 2. Understand and explain the use of Middleware.
+A: There are 3 categories of middleware at Lambda, buuilt-in, third-party, and custom
+   middleware. Built-in is included in express. We can call middleware using .use and connect them to routers and servers. Third party middleware examples are morgan, cors, and helmet. These need to be installed to use. And custom are functions we create to perform tasks like in the router methods. These are to make our code cleaner and more readable and avoids repetition.
+
 3. The basic principles of the REST architectural style.
+A: The principles of REST architectual style is:
+   1. everything is a resource
+   2. each resource is accessible through unique URI, which is a library for URLs
+   3. resources can have multiple representations
+   4. communication happens over a stateless protocol (HTTP).
+   5. resource management happens via HTTP methods.
+
 4. Understand and explain the use of Express Routers.
+A: Express routers behave like mini Express applications and have their own routing and
+   middleware. They must exist inside of an express application and are written with their own seperate purposes so they can be pieced together, much like components. We can neatly package many endpoints in the application and be ready to use.
+
 5. Describe tooling used to manually test the correctness of an API.
+A: So far the only one used is Postman and it is very useful to test the endpoints of
+   APIs to make sure that each and every method is being called correctly. We need to make sure that errors, data, and success messages are passing though and can be use for live coding such as manipulation with adding or deleting data from the API.
